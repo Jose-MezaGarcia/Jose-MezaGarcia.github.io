@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Herramientas y JS</title>
+    <link rel="stylesheet" href="../css/estilos.css">
+</head>
+<body>
+
+    <nav>
+        <a href="index.html">Inicio</a> | 
+        <a href="autobiografia.html">Autobiografía</a> | 
+        <a href="galery.html">Museo</a> | 
+        <a href="contacto.html">Contacto</a> | 
+        <a href="herramientas.html">Herramientas</a> |
+        <a href="misperros.html">Mis Perros</a>
+    </nav>
+
+    <h1>Herramientas</h1>
+
+    <section>
+        <h2>Convertidor a Pesos</h2>
+        <label>Cantidad en Dólares (USD):</label>
+        <input type="number" id="dolares" placeholder="Ej. 10">
+        <button onclick="convertirPesos()">Convertir</button>
+        <p id="resConvertidor"></p>
+    </section>
+
+    <hr>
+
+    <section>
+        <h2>Calculadora Básica</h2>
+        <input type="number" id="num1" placeholder="Número 1">
+        <input type="number" id="num2" placeholder="Número 2"><br><br>
+        <button onclick="calcular('+')">+</button>
+        <button onclick="calcular('-')">-</button>
+        <button onclick="calcular('*')">*</button>
+        <button onclick="calcular('/')">/</button>
+        <p id="resCalculadora"></p>
+    </section>
+
+    <hr>
+
+    
+    <section>
+        <h2>Cuestionario Interactivo de mi (Jose)</h2>
+        
+        <p><strong>1. ¿En qué semestre estoy?</strong></p>
+        <input type="radio" name="p1" value="incorrecto"> 3er Semestre<br>
+        <input type="radio" name="p1" value="correcto"> 5to Semestre<br><br>
+        <button onclick="calificarQuiz1()">Calificar Pregunta 1</button>
+        <p id="resQuiz1" style="font-weight: bold;"></p>
+
+        <br>
+
+        <p><strong>2. ¿Cuál es mi anime favorito?</strong></p>
+        <input type="radio" name="p2" value="incorrecto"> Dragon Ball<br>
+        <input type="radio" name="p2" value="correcto"> Sakura Card Captor<br><br>
+        <button onclick="calificarQuiz2()">Calificar Pregunta 2</button>
+        <p id="resQuiz2" style="font-weight: bold;"></p>
+
+        <br>
+
+        <p><strong>3. ¿Cuál es mi apellido?</strong></p>
+        <input type="radio" name="p3" value="correcto"> Meza<br>
+        <input type="radio" name="p3" value="incorrecto"> Pérez<br><br>
+        <button onclick="calificarQuiz3()">Calificar Pregunta 3</button>
+        <p id="resQuiz3" style="font-weight: bold;"></p>
+    </section>
+
+    <script>
+       
+        function convertirPesos() {
+            const dolares = parseFloat(document.getElementById('dolares').value);
+            if (isNaN(dolares)) {
+                document.getElementById('resConvertidor').textContent = "Ingresa un número válido.";
+                return;
+            }
+            const pesos = dolares * 20.0; // Tipo de cambio de referencia
+            document.getElementById('resConvertidor').textContent = "Son: $" + pesos.toFixed(2) + " Pesos MXN";
+        }
+
+      
+        function calcular(operacion) {
+            const n1 = parseFloat(document.getElementById('num1').value);
+            const n2 = parseFloat(document.getElementById('num2').value);
+            let resultado = 0;
+
+            if (isNaN(n1) || isNaN(n2)) {
+                document.getElementById('resCalculadora').textContent = "Ingresa ambos números.";
+                return;
+            }
+
+            if (operacion === '+') resultado = n1 + n2;
+            if (operacion === '-') resultado = n1 - n2;
+            if (operacion === '*') resultado = n1 * n2;
+            if (operacion === '/') {
+                if (n2 === 0) {
+                    document.getElementById('resCalculadora').textContent = "No se puede dividir entre cero.";
+                    return;
+                }
+                resultado = n1 / n2;
+            }
+
+            document.getElementById('resCalculadora').textContent = "Resultado: " + resultado;
+        }
+
+        function calificarQuiz1() {
+            const respuesta = document.querySelector('input[name="p1"]:checked');
+            const mensaje = document.getElementById('resQuiz1');
+
+            if (!respuesta) {
+                mensaje.textContent = "Selecciona una respuesta.";
+                mensaje.style.color = "orange";
+                return;
+            }
+
+            if (respuesta.value === 'correcto') {
+                mensaje.textContent = "¡Correcto! Va en 5to semestre.";
+                mensaje.style.color = "green";
+            } else {
+                mensaje.textContent = "Incorrecto, intenta de nuevo.";
+                mensaje.style.color = "red";
+            }
+        }
+
+        function calificarQuiz2() {
+            const respuesta = document.querySelector('input[name="p2"]:checked');
+            const mensaje = document.getElementById('resQuiz2');
+
+            if (!respuesta) {
+                mensaje.textContent = "Selecciona una respuesta.";
+                mensaje.style.color = "orange";
+                return;
+            }
+
+            if (respuesta.value === 'correcto') {
+                mensaje.textContent = "¡Correcto! Su anime favorito es Sakura Card Captor.";
+                mensaje.style.color = "green";
+            } else {
+                mensaje.textContent = "Incorrecto, ese no es su favorito.";
+                mensaje.style.color = "red";
+            }
+        }
+
+        function calificarQuiz3() {
+            const respuesta = document.querySelector('input[name="p3"]:checked');
+            const mensaje = document.getElementById('resQuiz3');
+
+            if (!respuesta) {
+                mensaje.textContent = "Selecciona una respuesta.";
+                mensaje.style.color = "orange";
+                return;
+            }
+
+            if (respuesta.value === 'correcto') {
+                mensaje.textContent = "¡Correcto! Su apellido es Meza.";
+                mensaje.style.color = "green";
+            } else {
+                mensaje.textContent = "Incorrecto, ese no es su apellido.";
+                mensaje.style.color = "red";
+            }
+        }
+    </script>
+</body>
+</html>
